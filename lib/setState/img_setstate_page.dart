@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:flutter_default_state_manager/widgets/imc_gauge_range.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -13,6 +16,13 @@ class ImcSetStatePage extends StatefulWidget {
 class _ImcSetStatePageState extends State<ImcSetStatePage> {
   final pesoEC = TextEditingController();
   final alturaEC = TextEditingController();
+  var imc = 0.0;
+
+  void _calcularIMC({required double peso, required double altura}) {
+    setState(() {
+      imc = peso / pow(altura, 2);
+    });
+  }
 
   @override
   void dispose() {
@@ -30,55 +40,7 @@ class _ImcSetStatePageState extends State<ImcSetStatePage> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              SfRadialGauge(
-                axes: [
-                  RadialAxis(
-                    showLabels: false,
-                    showAxisLine: false,
-                    showTicks: false,
-                    minimum: 12.5,
-                    maximum: 47.9,
-                    ranges: [
-                      ImcGaugeRange(
-                        color: Colors.blue, 
-                        start: 12.5, 
-                        end: 18.5, 
-                        label: 'Magro'
-                      ),
-                      ImcGaugeRange(
-                        color: Colors.green, 
-                        start: 18.5, 
-                        end: 24.5, 
-                        label: 'Normal'
-                      ),
-                      ImcGaugeRange(
-                        color: Colors.yellow[600]!, 
-                        start: 24.5, 
-                        end: 29.9, 
-                        label: 'Sobrepeso'
-                      ),
-                      ImcGaugeRange(
-                        color: Colors.red[500]!, 
-                        start: 29.9, 
-                        end: 39.9, 
-                        label: 'Obesidade'
-                      ),
-                      ImcGaugeRange(
-                        color: Colors.red[900]!, 
-                        start: 39.9, 
-                        end: 47.9, 
-                        label: 'Obesidade Grave'
-                      )
-                    ],
-                    pointers: [
-                      NeedlePointer(
-                        value: 15,
-                        enableAnimation: true,
-                      )
-                    ],
-                  )
-                ],
-              ),
+              ImgGauge(imc: imc),
               SizedBox(height: 20,),
               TextFormField(
                 controller: pesoEC,
