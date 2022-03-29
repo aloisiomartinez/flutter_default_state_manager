@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_default_state_manager/setState/img_setstate_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  void _goToPage(BuildContext context, Widget page) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => page, 
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +21,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {}, 
+              onPressed: () => _goToPage(context, ImcSetStatePage()), 
               child: Text('setState')
             ),
             ElevatedButton(
