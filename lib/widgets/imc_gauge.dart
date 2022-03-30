@@ -3,11 +3,11 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import 'imc_gauge_range.dart';
 
-class ImgGauge extends StatelessWidget {
+class ImcGauge extends StatelessWidget {
 
   final double imc;
 
-  const ImgGauge({Key? key, required this.imc}) : super(key: key);
+  const ImcGauge({Key? key, required this.imc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
