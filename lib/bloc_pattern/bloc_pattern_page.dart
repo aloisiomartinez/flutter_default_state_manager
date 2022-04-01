@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_default_state_manager/bloc_pattern/block_pattern_controller.dart';
+import 'package:flutter_default_state_manager/bloc_pattern/imc_state.dart';
 import 'package:flutter_default_state_manager/change_notifier/imc_change_notifier_controller.dart';
 import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +32,7 @@ class _BlocPatternPageState extends State<BlocPatternPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Imc ChangeNotifier')),
+      appBar: AppBar(title: Text('Imc Bloc Pattern')),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -39,7 +40,14 @@ class _BlocPatternPageState extends State<BlocPatternPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                
+                StreamBuilder<ImcState>(
+                  stream: controller.imcOut,
+                  builder: (context, snapshot)  {
+                    var imc = snapshot.data?.imc ?? 0;
+                    
+                    return ImcGauge(imc: imc);
+                  },
+                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -89,7 +97,7 @@ class _BlocPatternPageState extends State<BlocPatternPage> {
                         double peso = formatter.parse(pesoEC.text) as double;
                         double altura = formatter.parse(alturaEC.text) as double;
 
-                        //controller.calcularIMC(peso: peso, altura: altura);
+                        controller.calcularImc(peso: peso, altura: altura);
                       }
                     },
                     child: Text('Calcular IMC'))
